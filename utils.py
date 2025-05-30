@@ -27,3 +27,17 @@ async def check_ban(uid):
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
+
+async def get_player_info(uid, region):
+    api_url = f"https://hanif-full-info.vercel.app/player-info?uid={uid}&region={region}"
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(api_url) as response:
+                if response.status != 200:
+                    return None
+
+                response_data = await response.json()
+                return response_data
+    except Exception as e:
+        print(f"An error occurred while fetching player info: {e}")
+        return None
